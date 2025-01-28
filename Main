@@ -1,0 +1,136 @@
+package advancedjava;
+
+
+
+/* 
+This is a simple GUI application to track student grades. 
+Created on Date: 1/27/25
+*/
+
+
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.util.ArrayList;
+import java.awt.event.ActionListener; 
+import java.awt.event.ActionEvent; 
+import javax.swing.JLabel; 
+import java.awt.*;
+import javax.swing.*;
+
+
+
+public class Main {
+	
+	public static void main(String[] args) {
+		ArrayList<StudentGrades> student  = new ArrayList<>(); //ArrayList created to hold the data on student information. 
+		
+		
+		//GUI creation
+		JFrame frame = new JFrame();
+		JTextField textFieldOne = new JTextField("Student Name", 20);
+		JTextField textFieldTwo = new JTextField("Subject", 20);
+		JTextField textFieldThree = new JTextField("Grade", 20);
+		
+		JButton button = new JButton(); 
+		JButton buttonTwo = new JButton(); 
+	   
+	
+		
+		
+		frame.setSize(500, 500);
+		frame.setLayout(new GridLayout(3, 3, 10, 10));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Student Application");
+		frame.add(textFieldOne);
+		frame.add(textFieldTwo);
+		frame.add(textFieldThree); 
+		
+		button.setText("Add Grade");
+		buttonTwo.setText("View Grades");
+		
+		frame.add(button);
+		frame.add(buttonTwo); 
+		
+		frame.setVisible(true);	
+		
+		
+		//Button method for when it is pressed. 
+		 button.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	
+	            	String name = textFieldOne.getText();       
+	                String subject = textFieldTwo.getText();    
+	                String grades = textFieldThree.getText(); 
+	            	
+	            	
+
+	            	 try {
+	                     int grade = Integer.parseInt(grades);   
+	                     
+
+	                     
+	                     StudentGrades newStudent = new StudentGrades(name, subject, grade); //An object of StudentGrades is created to store new data in the ArrayList. 
+
+	                 
+	                     student.add(newStudent);
+	                     
+
+	                  
+	                     textFieldOne.setText("");
+	                     textFieldTwo.setText("");
+	                     textFieldThree.setText("");
+
+	                     System.out.println("Grade added for: " + name);
+	                 } catch (NumberFormatException ex) {
+	                     System.out.println("Invalid grade entered. Please enter a number.");
+	                 }
+	            }
+	        });		
+		 
+		 
+	
+		 
+	 
+		 //Button 2 method.
+		 buttonTwo.addActionListener(new ActionListener() {
+			    @Override
+			    public void actionPerformed(ActionEvent e) {
+			        for (StudentGrades studentGrade : student) {
+			            System.out.println(studentGrade); 
+			        }
+			    }
+			});
+	}
+}
+
+
+
+
+
+
+
+
+
+
+//StudentGrades class. This is created to hold all information of the student. It is turned into an object to be used as an ArrayList. 
+class StudentGrades {
+	
+	String name;
+	String subject;
+	int grades;
+	
+	StudentGrades(String name, String subject, int grades) {
+		this.name = name;
+		this.subject = subject;
+		this.grades = grades;
+	}
+	
+	
+	@Override
+	public String toString() {
+	    return name + " - " + subject + ": " + grades;
+	}
+
+}
